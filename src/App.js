@@ -46,9 +46,9 @@ const App = () => {
     <div>
       <form onSubmit={onSubmit}>
         <input
-        name='useName'
+        name='userName'
         placeholder='아이디'
-        value={ form.userName}
+        value={form.userName}
         onChange={onChange}
         />
         <input
