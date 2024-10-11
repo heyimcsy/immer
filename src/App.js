@@ -9,7 +9,20 @@ const App = () => {
     array:[],
     uselessValue: null
   })
+const [number, setNumber]=useState(0)
+  const onIncrease=useCallback(() => {
+    setNumber(prevNumber => prevNumber +1)
+  },[])
 
+  const update = produce(draft => {
+    draft.value = 2
+  })
+const originalState = {
+    value:1,
+  foo:'bar'
+}
+const nextState = update(originalState)
+  console.log('dd',nextState)
   const onChange = useCallback((e) => {
     const {name, value} = e.target
     setForm(
