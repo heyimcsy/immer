@@ -1,96 +1,16 @@
 import './App.css';
-import { useCallback, useRef, useState } from 'react';
-import { produce } from 'immer';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
 
 const App = () => {
-  const nextId = useRef(1);
-  const [form, setForm] = useState({name: '', userName: ''})
-  const [data, setData] = useState({
-    array:[],
-    uselessValue: null
-  })
-const [number, setNumber]=useState(0)
-  const onIncrease=useCallback(() => {
-    setNumber(prevNumber => prevNumber +1)
-  },[])
 
-  const update = produce(draft => {
-    draft.value = 2
-  })
-const originalState = {
-    value:1,
-  foo:'bar'
-}
-const nextState = update(originalState)
-  console.log('dd',nextState)
-  const onChange = useCallback((e) => {
-    const {name, value} = e.target
-    setForm(
-      produce(form, draft => {
-        draft[name] = value
-    })
-    )
-  },[form] )
-
-  const onSubmit = useCallback((e)=> {
-    e.preventDefault()
-    const info = {
-      id: nextId.current,
-      name: form.name,
-      userName: form.userName
-    }
-    setData(
-      produce(data, draft => {
-        draft.array.push(info)
-      })
-    )
-
-    setForm({
-      name: '',
-      userName: ''
-    })
-
-    nextId.current += 1
-  },[data, form.name, form.userName] )
-
-  const onRemove = useCallback((id) => {
-    setData(
-      produce(data, draft => {
-        draft.array.splice(draft.array.findIndex(info=> info.id === id ),1)
-      })
-    )
-  },[data])
-
-  return(
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-        name='userName'
-        placeholder='아이디'
-        value={form.userName}
-        onChange={onChange}
-        />
-        <input
-        name='name'
-        placeholder="이름"
-        value={form.name}
-        onChange={onChange}
-        />
-        <button type="submit">등록</button>
-      </form>
-      <div>
-        <ul>
-          {data.array.map(info => (
-            <li key={info.id} onClick={() => onRemove(info.id)}>
-              {info.userName}({info.name})
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  )
-
-
+  return (
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/about" element={<About/>}/>
+    </Routes>
+  );
 }
 
 export default App;
